@@ -104,6 +104,12 @@ official repository. [#siteclone]_
    write permission on the repository. Is there some security concern
    there? Push URLs are easily deduced from the other ones.
 
+   -- Actually, yes. The push URLs require that you have a valid and
+   associated SSH key and that you are a collaborator of the project. 
+   By trying to pull/push from that URL the GitHub_  system will most 
+   probably get overwhelmed and deny access on a per IP basis. I am 
+   not sure with Gitorious_ though. - Dean Michael Berris
+
 .. _Gitorious: http://gitorious.org
 .. _GitHub: http://github.com
 
