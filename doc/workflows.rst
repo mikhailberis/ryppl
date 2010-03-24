@@ -116,15 +116,6 @@ creating a public clone of the official repository. [#siteclone]_
 Otherwise it will dump instructions for getting the project into the
 Ryppl collection.
 
-   -- Actually, yes. The push URLs require that you have a valid and
-   associated SSH key and that you are a collaborator of the project. 
-   By trying to pull/push from that URL the GitHub_  system will most 
-   probably get overwhelmed and deny access on a per IP basis. I am 
-   not sure with Gitorious_ though. - Dean Michael Berris
-
-.. _Gitorious: http://gitorious.org
-.. _GitHub: http://github.com
-
 .. Note:: We don't know what the mechanism looks like to actually get
    a project into the Ryppl collection.  Can anyone just add things
    to Ryppl, or is there a gatekeeper, or even a human processing the
