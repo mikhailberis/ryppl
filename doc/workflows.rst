@@ -6,8 +6,20 @@ Workflows
 
 This section describes cases that need to be handled by this system,
 not just for library developers, but for end-users, integrators, etc.
-These use cases are not currently prioritized.  We divide them by the
-role of the initiator.
+These use cases are not currently fully-prioritized.  
+
+Conventions
+===========
+
+Most `ryppl` commands take the form:
+
+.. parsed-literal::
+
+  ryppl *command-name* [ *options*\ … ] [ *project-names*\ … ]
+
+If no *project-names* are supplied, such commands expect your current
+directory to be in the working tree of a Ryppl project, and that you
+intend to operate on that project.
 
 Fundamentals
 ============
@@ -89,20 +101,20 @@ details.
 Publishing Projects
 -------------------
 
-To make your project visible to the world,
+If you make changes to a project, you may want to submit those changes
+to the upstream maintainer, or share your changes with other
+interested users.  To make your (usually modified) project state
+visible to the world,
 
 .. parsed-literal::
 
    $ ryppl publish *project*
 
-Ryppl will dump instructions for creating a public clone of the
-official repository. [#siteclone]_
-
-.. Admonition:: Open Question
-
-   GitHub_ and Gitorious_ don't reveal the push URL unless you have
-   write permission on the repository. Is there some security concern
-   there? Push URLs are easily deduced from the other ones.
+If the project you are publishing was cloned from an existing
+project's “official” repository, Ryppl will dump instructions for
+creating a public clone of the official repository. [#siteclone]_
+Otherwise it will dump instructions for getting the project into the
+Ryppl collection.
 
    -- Actually, yes. The push URLs require that you have a valid and
    associated SSH key and that you are a collaborator of the project. 
@@ -112,6 +124,11 @@ official repository. [#siteclone]_
 
 .. _Gitorious: http://gitorious.org
 .. _GitHub: http://github.com
+
+.. Note:: We don't know what the mechanism looks like to actually get
+   a project into the Ryppl collection.  Can anyone just add things
+   to Ryppl, or is there a gatekeeper, or even a human processing the
+   additions?
 
 Merge Requests
 --------------
@@ -143,15 +160,53 @@ If you are working on a branch other than your mainline (usually
 (e.g. beta).  You can add an explicit version string, or ryppl will
 attempt to assign one for you.
 
-Request Remote Testing
-----------------------
+Review Outstanding Merge Requests
+---------------------------------
+
+Initially, merge requests can be tracked in the maintainers' own
+personal email systems.  At some point we may want to keep track of
+which merge requests are unhandled, so a maintainer can ask, ::
+
+  $ ryppl show merge-requests
+
+[This is a low-priority feature.]
+
+Testing
+=======
+
+To test a Ryppl project on the local machine from within its project
+directory, simply::
+
+  $ ryppl test
+
+Testing Specific Projects
+-------------------------
+
+Testing specific Ryppl projects is just as easy:
+
+.. parsed-literal::
+
+   $ ryppl test *project1*\ , *project2*\ … 
+
+Testing Dependencies
+--------------------
+
+To also test all the projects that a given list of projects depends on
+(transitively):
+
+.. parsed-literal::
+
+   $ ryppl test --deep *project1*\ , *project2*\ … 
+
+Remote Testing
+--------------
 
 One of ryppl's most important features is the ability for anyone to
 dedicate testing resources to a project.  That allows testing on
 diverse platforms not controlled by the project maintainer.  To
-request a test of the current working tree state, simply::
+test remotely, simply::
 
-  $ ryppl test-request
+  $ ryppl remote-test 
 
 which will request results from your “usual” set of platforms for the
 HEAD of the current working tree.  If you have made changes to the
@@ -163,7 +218,7 @@ To test on specific slaves, they can be named on the command-line:
 
 .. parsed-literal::
 
-  $ ryppl test-request --slave=\ *slave1*,\ *slave2*\, …
+  $ ryppl remote-test --slave=\ *slave1*,\ *slave2*\, …
 
 Test Slave Aliases
 ------------------
@@ -185,19 +240,20 @@ presumably all Apple Macs.  Ryppl will choose among these slaves or
 workload.  The special slave alias ``default`` defines the slaves to
 use when no other slaves are specified.
 
-Review Outstanding Merge Requests
----------------------------------
+Setting up a Test Slave
+-----------------------
 
-Initially, merge requests can be tracked in the maintainers' own
-personal email systems.  At some point we may want to keep track of
-which merge requests are unhandled, so a maintainer can ask, ::
+.. admonition:: WRITEME
 
-  $ ryppl show merge-requests
+   * Subset of projects
+   * Subset of public repos/developers to pull from
 
-[This is a low-priority feature.]
+Subscribing to Test Results
+--------------------------- 
 
-Testing
-=======
+.. admonition:: WRITEME
+
+   Some way to get notifications of tests you didn't initiate
 
 Releasability
 -------------
@@ -216,32 +272,18 @@ To summarize a project's releasability criteria, ::
 
 [This is a low-priority feature.]
 
-* Test these three Ryppl projects
-* Test these three Ryppl projects and whatever they depend on
-* Test a superproject (like Boost)
-* Prepare a testing slave machine
-  * Subset of projects
-  * Subset of public repos/developers to pull from
-* Subscribe to test results
-
-.. What's Missing
-
-    * Dependency Management - probably independent from CMake
-    * Testing is busted?  Yes, for Python.
-    * Testing is unweildy (having to call ctest)
-
-    * if we want to use CDash, makes sense to have CTest run tests.
-      Incremental testing needs research in that case.
 
 Packaging / Release
 ===================
 
-* Releasability overview (email)
-* Automatically notify maintainers of breakage (email).  Show test /failures/
-* Nightly Auto-tagged releasable branch for each library
-* Continuous testing of the release branch
-* Make binaries
+.. admonition:: WRITEME
 
+  Requirements:
+
+  * Automatically notify maintainers of breakage (email).  Show test /failures/
+  * Nightly Auto-tagged releasable branch for each library
+  * Continuous testing of the release branch
+  * Make binaries
 
 .. [#siteclone] If the official repository is hosted on Gitorious_ or
     GitHub_, these instructions will include directions for cloning

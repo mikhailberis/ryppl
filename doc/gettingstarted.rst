@@ -52,7 +52,7 @@ the contents.  Most of boost is there, but:
 Initialize and update the submodules
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Issue the command ``git submodule init --update``:
+Issue the command ``git submodule init`` followed by ``git submodule update``:
 
 .. parsed-literal::
 
@@ -64,10 +64,12 @@ Issue the command ``git submodule init --update``:
 
   *etc…*
 
-  Initialized empty Git repository in /tmp/boost/cmake/.git/
-  remote: Counting objects: 263, done.
+  % git submodule update
+  Initialized empty Git repository in /tmp/boost-ryppl/cmake/.git/
+  Submodule path 'cmake': checked out '6dce83c277d48644fac187799876799eb66c97a2'
 
   *etc…*
+
   
 There will be alot of output...  Git has checked out each submodule to
 its corresponding directory inside the superproject, and.
